@@ -9,6 +9,6 @@ describe 'Player' do
 
   it "reduces player's points" do
     bob.reduce_points
-    expect(bob.hp).to eq 50
+    expect(bob.hp).to eq Player::DEFAULT_HP - 10 
   end
 end

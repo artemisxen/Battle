@@ -14,7 +14,7 @@ enable :sessions
   post '/names' do
     $player_1  = Player.new(params[:player_1])
     $player_2  = Player.new(params[:player_2])
-    p params
+    $game = Game.new
     redirect '/play'
   end
 
@@ -28,7 +28,7 @@ enable :sessions
   end
 
   post '/attack' do
-    $player_2.reduce_points
+    $game.attack($player_2)
     session[:latest_event] = "#{$player_1.name} attacked #{$player_2.name}"
     redirect '/play'
   end
