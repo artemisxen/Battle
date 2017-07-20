@@ -28,16 +28,28 @@ enable :sessions
   post '/attack_1' do
     $game.attack($game.player_2)
     session[:latest_event] = "#{$game.player_1.name} attacked #{$game.player_2.name}"
-    redirect '/play'
+    check_if_game_over($game.player_2)
   end
 
   post '/attack_2' do
     $game.attack($game.player_1)
     session[:latest_event] = "#{$game.player_2.name} attacked #{$game.player_1.name}"
-    redirect '/play'
+    check_if_game_over($game.player_1)
   end
 
+  get '/lose' do
+    @loser = session[:loser]
+    erb(:lose)
+  end
 
+  def check_if_game_over(player)
+    if player.hp == 0
+      session[:loser] = player.name
+      redirect('/lose')
+    else
+      redirect('/play')
+    end
+  end
 
   run! if app_file == $0
 end
