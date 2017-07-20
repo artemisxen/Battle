@@ -1,12 +1,12 @@
 class Player
-  attr_reader :name, :points
+  attr_reader :name, :hp
 
   def initialize(name)
     @name = name
-    @points = 60
+    @hp = 60
   end
 
   def reduce_points
-    @points -= 10
+    @hp -= 10
   end
 end

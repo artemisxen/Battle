@@ -21,16 +21,16 @@ enable :sessions
   get '/play' do
     @player_1 = $player_1.name
     @player_2 = $player_2.name
+    @player_1_points = $player_1.hp
+    @player_2_points = $player_2.hp
+    @latest_event = session[:latest_event]
     erb(:play)
   end
 
-  get '/attack' do
-    @player_1 = $player_1.name
-    @player_2 = $player_2.name
-    @player_1_points = $player_1.reduce_points
-    @player_2_points = $player_2.reduce_points
-    # erb(:attack)
-    erb(:play)
+  post '/attack' do
+    $player_2.reduce_points
+    session[:latest_event] = "#{$player_1.name} attacked #{$player_2.name}"
+    redirect '/play'
   end
 
   run! if app_file == $0
