@@ -1,8 +1,9 @@
 require 'sinatra/base'
 require './lib/player'
+require './lib/game'
 
 class Battle < Sinatra::Base
-  
+
 enable :sessions
 
   get '/' do
@@ -19,6 +20,7 @@ enable :sessions
     @player_2 = $game.player_2.name
     @player_1_points = $game.player_1.hp
     @player_2_points = $game.player_2.hp
+    @turn = $game.turn.name
     @latest_event = session[:latest_event]
     erb(:play)
   end
