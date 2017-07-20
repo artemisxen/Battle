@@ -6,16 +6,34 @@ class Battle < Sinatra::Base
 
 enable :sessions
 
+helpers do
+  def check_if_game_over(player)
+    if player.hp == 0
+      session[:loser] = player.name
+      redirect('/lose')
+    else
+      redirect('/play')
+    end
+  end
+end
+
+before do
+  @game = session[:game]
+end
+
   get '/' do
     erb(:index)
   end
 
   post '/names' do
-    $game = Game.new(Player.new(params[:player_1]), Player.new(params[:player_2]))
+    $game = Game.start(Player.new(params[:player_1]), Player.new(params[:player_2]))
+    Game.start(Player.new(params[:player_1]), Player.new(params[:player_2]))
+    session[:game] = Game.current
     redirect '/play'
   end
 
   get '/play' do
+    p @game
     @player_1 = $game.player_1.name
     @player_2 = $game.player_2.name
     @player_1_points = $game.player_1.hp
@@ -42,14 +60,7 @@ enable :sessions
     erb(:lose)
   end
 
-  def check_if_game_over(player)
-    if player.hp == 0
-      session[:loser] = player.name
-      redirect('/lose')
-    else
-      redirect('/play')
-    end
-  end
+
 
   run! if app_file == $0
 end
