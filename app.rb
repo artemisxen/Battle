@@ -8,7 +8,7 @@ enable :sessions
 
 helpers do
   def check_if_game_over(player)
-    if player.hp == 0
+    if player.hp <= 0
       session[:loser] = player.name
       redirect('/lose')
     else
