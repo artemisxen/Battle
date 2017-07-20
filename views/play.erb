@@ -1,9 +1,42 @@
- <%= @player_1 %> vs. <%= @player_2 %>
- <h1><%= @player_1 %>: <%=@player_1_points %>HP </h1>
- <h1><%= @player_2 %>: <%= @player_2_points %>HP </h1>
-<form action="/attack" method="post">
-  <input type="submit" value="Attack">
-</form>
-<h1> <%= @turn %>'s turn! </h1>
+<style>
+.fighter {
+    float: left;
+    width: 48%;
+    margin: 1%;
+}
+.fighter_2 {
+    float: right;
+    width: 48%;
+    margin: 1%;
+}
 
-<h1><%= @latest_event %></h1>
+h1 {
+  color:red;
+  text-align: center;
+  font-size: 30px;
+}
+.fighter p {
+    word-break: break-all;
+}
+</style>
+<h1><%= @player_1 %> vs. <%= @player_2 %></h1>
+<h2> <%= @turn %>'s turn! </h2>
+
+<div id="fighter">
+    <div class="fighter">
+        <h3> <%= @player_1 %>:  <%=@player_1_points %>HP</h3>
+        <p> <form action="/attack_1" method="post" name="fighter_1">
+          <input type="submit" value="Attack">
+        </form>
+      </p>
+    </div>
+    <div class="fighter_2">
+        <h3> <%= @player_2 %>: <%= @player_2_points %>HP</h3>
+        <p> <form action="/attack_2" method="post" name="fighter_2">
+          <input type="submit" value="Attack">
+        </form>
+      </p>
+    </div>
+</div>
+
+<h2><%= @latest_event %></h2>

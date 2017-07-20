@@ -6,7 +6,7 @@ feature "Switching turns" do
   end
 
   scenario "First attack has been made" do
-    click_button "Attack"
+    find("form[name='fighter_1']").click_button "Attack"
     expect(page).to have_content("John's turn!")
   end
 end

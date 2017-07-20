@@ -25,11 +25,19 @@ enable :sessions
     erb(:play)
   end
 
-  post '/attack' do
+  post '/attack_1' do
     $game.attack($game.player_2)
     session[:latest_event] = "#{$game.player_1.name} attacked #{$game.player_2.name}"
     redirect '/play'
   end
+
+  post '/attack_2' do
+    $game.attack($game.player_1)
+    session[:latest_event] = "#{$game.player_2.name} attacked #{$game.player_1.name}"
+    redirect '/play'
+  end
+
+
 
   run! if app_file == $0
 end
